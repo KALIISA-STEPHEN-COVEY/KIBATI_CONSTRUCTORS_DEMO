@@ -1,0 +1,207 @@
+/* ==========================================================================
+   1. Portfolio Container Canvas & Spacing Rules
+   ========================================================================== */
+.portfolio-container {
+  padding: 60px 5%;
+  background: var(--light-gray, #f4f4f4);
+  min-height: 100vh; /* Keeps background filled even if filtering down to few cards */
+}
+
+/* Page Banner Margin Corrections for Fixed Navbar */
+.page-banner {
+  background: #1a1a1a;
+  padding: 130px 5% 70px 5%;
+  text-align: center;
+  color: #ffffff;
+  border-bottom: 2px solid var(--primary-gold, #FFD700);
+}
+
+.eyebrow-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--primary-gold, #FFD700);
+  display: block;
+  margin-bottom: 10px;
+}
+
+.page-banner h1 {
+  font-size: 2.6rem;
+  margin: 0 0 15px 0;
+  font-weight: 800;
+}
+
+.banner-sub {
+  font-size: 1.1rem;
+  color: #aaaaaa;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   2. Interactive Category Filter Controller Row
+   ========================================================================== */
+.filter-wrapper {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 50px 0 10px 0;
+  padding: 0 5%;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 11px 24px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-dark, #333333);
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* High-Contrast Interactive Highlight States */
+.filter-btn.active, 
+.filter-btn:hover {
+  background: var(--dark-charcoal, #1a1a1a);
+  color: var(--primary-gold, #FFD700);
+  border-color: var(--primary-gold, #FFD700);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================================================
+   3. Portfolio Showcase Adaptive Grid (Hardware Accelerated)
+   ========================================================================== */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 35px;
+  max-width: 1200px;
+  margin: 40px auto 0 auto;
+  
+  /* GPU Acceleration to ensure fluid link-filter sorting mechanics */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Individual Project Card Framework Panel */
+.portfolio-card {
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+  border-top: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+  
+  /* Smooth interaction transition timings */
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+              border-color 0.3s ease;
+}
+
+.portfolio-img-box {
+  width: 100%;
+  height: 220px;
+  overflow: hidden;
+  background: #1a1a1a;
+  position: relative;
+}
+
+.portfolio-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.portfolio-info {
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Capsule Tag Identifiers */
+.project-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--primary-gold, #FFD700);
+  background: var(--dark-charcoal, #1a1a1a);
+  padding: 5px 12px;
+  border-radius: 4px;
+  align-self: flex-start;
+  margin-bottom: 15px;
+  letter-spacing: 0.5px;
+}
+
+.portfolio-info h3 {
+  margin: 0 0 10px 0;
+  font-size: 1.4rem;
+  color: var(--dark-charcoal, #1a1a1a);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.portfolio-info p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #555555;
+  margin: 0;
+}
+
+/* ==========================================================================
+   4. Subtle Motion Interaction Animation Targets
+   ========================================================================== */
+.portfolio-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  border-top-color: var(--primary-gold, #FFD700);
+}
+
+.portfolio-card:hover .portfolio-img-box img {
+  transform: scale(1.06);
+}
+
+/* ==========================================================================
+   5. Responsive Overrides (Fluid Scales for Mobile Screens)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .portfolio-container {
+    padding: 30px 5%;
+  }
+  
+  .filter-wrapper {
+    margin-top: 30px;
+    gap: 8px;
+  }
+  
+  .filter-btn {
+    padding: 8px 18px;
+    font-size: 0.85rem;
+    flex-grow: 1; /* Allows buttons to span naturally on small monitors */
+    text-align: center;
+  }
+
+  .portfolio-grid {
+    grid-template-columns: 1fr; /* Form single-column layouts on mobile phones */
+    gap: 25px;
+    margin-top: 30px;
+  }
+  
+  .portfolio-img-box {
+    height: 190px;
+  }
+  
+  .page-banner h1 {
+    font-size: 2rem;
+  }
+}

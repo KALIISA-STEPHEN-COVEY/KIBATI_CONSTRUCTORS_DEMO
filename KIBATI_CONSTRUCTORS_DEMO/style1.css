@@ -1,0 +1,457 @@
+/* ==========================================================================
+   1. Design Variables, Speed Controls, & Global Reset
+   ========================================================================== */
+:root {
+  --primary-gold: #FFD700;    /* Premium Accent Gold */
+  --dark-charcoal: #1a1a1a;   /* Rich Deep Background */
+  --light-gray: #f4f4f4;      /* Page Background */
+  --text-dark: #333333;
+  --text-light: #ffffff;
+  --transition-smooth: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  /* SPEED MODULES: Edit these timelines to control movement pacing */
+  --slider-speed: 25s;        /* Pacing length for project tracking ribbon */
+  --float-speed: 4s;          /* Pacing length for hero icon bounce loops */
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;    /* Clean native anchor scroll functionality */
+  scroll-margin-top: 70px;    /* Stops header tracking from blocking page text items */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--light-gray);
+  color: var(--text-dark);
+  overflow-x: hidden;         /* Completely blocks layout track breakout bar leaks */
+}
+
+/* ==========================================================================
+   2. Top Navigation Header Bar & Mobile Menu
+   ========================================================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  background: rgba(26, 26, 26, 0.95);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5%;
+  z-index: 999;
+  border-bottom: 2px solid var(--primary-gold);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nav-logo {
+  color: var(--text-light);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.nav-logo::after {
+  content: ' .';
+  color: var(--primary-gold);
+}
+
+.nav-links {
+  display: flex;
+  gap: 25px;
+}
+
+.nav-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: var(--transition-smooth);
+}
+
+.nav-links a:hover {
+  color: var(--primary-gold);
+}
+
+.nav-toggle {
+  display: none;
+}
+
+.burger-menu {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.burger-menu span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background: var(--text-light);
+  border-radius: 2px;
+  transition: var(--transition-smooth);
+}
+
+/* ==========================================================================
+   3. Hero Showcase Module & Floating Interaction Filters
+   ========================================================================== */
+.hero {
+  position: relative;
+  text-align: center;
+  color: var(--text-light);
+  background: #000000;
+  overflow: hidden;
+  padding-top: 70px; 
+}
+
+.hero-bg {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  opacity: 0.55; 
+  display: block;
+}
+
+.hero-content {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  z-index: 2;
+}
+
+.hero-brand-tag {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--primary-gold);
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero-content h1 {
+  font-size: 2.8rem;
+  margin: 0 0 15px 0;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  font-weight: 800;
+}
+
+.hero-content p {
+  font-size: 1.25rem;
+  margin: 0 0 30px 0;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 28px;
+  margin: 10px;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: var(--transition-smooth);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary {
+  background: var(--primary-gold);
+  color: #000000;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-light);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+  background: var(--text-light);
+  color: #000000;
+  transform: translateY(-3px);
+}
+
+.hero-icons {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px;
+  z-index: 2;
+}
+
+.float-icon {
+  width: auto;
+  max-width: 60px;
+  height: 50px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));
+  animation: gentleFloat var(--float-speed) ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
+  cursor: pointer;
+}
+
+.float-icon:nth-child(2) { animation-delay: 0.6s; }
+.float-icon:nth-child(3) { animation-delay: 1.2s; }
+
+.float-icon:hover {
+  transform: scale(1.2) translateY(-5px) !important;
+  filter: drop-shadow(0 8px 16px rgba(255, 215, 0, 0.6));
+}
+
+/* ==========================================================================
+   4. Ribbon Slider Module (Project Horizontal Infinite Marquee Fixed Style)
+   ========================================================================== */
+#projects.ribbon-slider,
+.ribbon-slider {
+  width: 100% !important;
+  overflow: hidden !important;
+  background: var(--dark-charcoal) !important;
+  padding: 35px 0 !important;
+  box-shadow: inset 0 10px 25px rgba(0,0,0,0.3), inset 0 -10px 25px rgba(0,0,0,0.3) !important;
+  display: block !important;
+}
+
+.ribbon-track {
+  display: flex !important;
+  gap: 30px !important;
+  width: max-content !important; /* Critical override: keeps elements expanding horizontally */
+  animation: scrollTrack var(--slider-speed) linear infinite !important;
+}
+
+.ribbon-slider:hover .ribbon-track {
+  animation-play-state: paused !important; /* Stops tracking scroll on mouse focus hover */
+}
+
+.ribbon-item {
+  flex-shrink: 0 !important;   /* Critical override: completely stops phone browsers from compressing boxes */
+  width: 280px !important; 
+  text-align: center !important;
+  text-decoration: none !important;
+  display: inline-block !important;
+}
+
+.ribbon-item img {
+  width: 100% !important;
+  height: 160px !important;
+  object-fit: cover !important; 
+  border: 2px solid rgba(255, 215, 0, 0.4) !important;
+  border-radius: 8px !important;
+  display: block !important;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.4) !important;
+  transition: transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), border-color 0.3s ease !important;
+}
+
+.ribbon-item:hover img {
+  transform: scale(1.06) !important;
+  border-color: var(--primary-gold) !important;
+}
+
+.ribbon-item .caption {
+  display: inline-block !important;
+  margin-top: 12px !important;
+  font-size: 0.85rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.5px !important;
+  color: #000000 !important;
+  background: var(--primary-gold) !important;
+  padding: 6px 14px !important;
+  border-radius: 4px !important;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+}
+
+/* ==========================================================================
+   5. Compact Page Layout Utility Grid
+   ========================================================================== */
+.compact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  width: 90%;
+  max-width: 1200px;
+  margin: 30px auto;
+}
+
+.compact-card {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-left: 4px solid var(--primary-gold);
+  position: relative;
+  top: 0;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), 
+              box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: pointer;
+}
+
+.compact-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* ==========================================================================
+   6. Client Review Testimonials Component
+   ========================================================================== */
+.testimonials-sec {
+  background: #eef0f2;
+  padding: 40px 0;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.testimonial-card {
+  border-left: 4px solid var(--dark-charcoal) !important;
+}
+
+.star-rating {
+  color: var(--primary-gold);
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+}
+
+.review-text {
+  font-style: italic;
+  line-height: 1.6;
+  color: #555;
+}
+
+.client-name {
+  margin: 15px 0 0 0;
+  font-size: 0.95rem;
+  color: var(--dark-charcoal);
+}
+
+/* ==========================================================================
+   7. Re-designed Minimalist Footer, Form, and Map Assemblies
+   ========================================================================== */
+.site-footer {
+  width: 100%;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 80px 0 40px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.footer-brand-card {
+  background: rgba(26, 26, 26, 0.95); 
+  border-top: 4px solid var(--primary-gold);
+  padding: 40px;
+  max-width: 1000px; 
+  width: 90%;
+  border-radius: 8px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  margin-bottom: 50px;
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 40px;
+  text-align: left;
+}
+
+.footer-form-col h3 {
+  color: var(--text-light);
+  font-size: 1.8rem;
+  margin: 0 0 10px 0;
+  letter-spacing: 1px;
+}
+
+.contact-meta {
+  color: #aaaaaa;
+  font-size: 0.95rem;
+  margin: 10px 0 5px 0;
+}
+
+.contact-location {
+  margin: 0 0 25px 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--primary-gold);
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 12px 16px;
+  background: #252525;
+  border: 1px solid #3d3d3d;
+  border-radius: 4px;
+/* ==========================================================================
+   11. GPU Hardware Acceleration Patch (Lag Fix)
+   ========================================================================== */
+
+/* Forces the browser to use the GPU (graphics card) to render the moving track */
+.ribbon-track {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Smooths out the floating icons in the hero section */
+.float-icon {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Smooths out the card pop-up transitions */
+.compact-card {
+  will-change: transform, box-shadow;
+  transform: translate3d(0, 0, 0);
+}
+.map-container {
+  width: 100% !important;
+  min-width: 250px !important;
+  height: 320px !important; /* Forces a stable physical height dimension */
+  min-height: 320px !important;
+  display: block !important; /* Prevents container collapses */
+  background: #252525;
+  border-radius: 6px;
+  border: 1px solid #3d3d3d;
+  padding: 4px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  position: relative;
+}
+
+/* Forces the Google Frame inside to strictly map out to the container margins */
+.map-container iframe {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+}

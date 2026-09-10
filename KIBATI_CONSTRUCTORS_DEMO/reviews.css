@@ -1,0 +1,170 @@
+/* ==========================================================================
+   1. Reviews Workspace Layout & Canvas Base
+   ========================================================================== */
+.reviews-workspace {
+  padding: 90px 6%;
+  background: var(--light-gray, #f8f9fa);
+  min-height: 80vh;
+}
+
+/* Page Intro Banner Frame */
+.page-banner {
+  background: #121212; /* Matches your premium dark header navbar token */
+  padding: 140px 5% 70px 5%;
+  text-align: center;
+  color: #ffffff;
+  border-bottom: 2px solid var(--primary-gold, #FFD700);
+}
+
+.eyebrow-text {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--primary-gold, #FFD700);
+  display: block;
+  margin-bottom: 12px;
+}
+
+.page-banner h1 {
+  font-size: 2.8rem;
+  margin: 0 0 16px 0;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.banner-sub {
+  font-size: 1.1rem;
+  color: #b0b0b0;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   2. Asymmetric Structural Grid Display Layout Panels
+   ========================================================================== */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 40px auto 0 auto;
+  
+  /* GPU Acceleration prevents frame drop or scrolling stutter */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+/* Individual Review Card Panel Design Rules */
+.review-display-card {
+  background: #ffffff;
+  padding: 35px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  border-bottom: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+  
+  /* Smooth animation timing presets */
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+              box-shadow 0.4s cubic-bezier(0.165, 0.84, 0.44, 1),
+              border-color 0.3s ease;
+}
+
+.review-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.review-stars {
+  color: var(--primary-gold, #FFD700);
+  font-size: 1.25rem;
+  letter-spacing: 3px;
+}
+
+/* Industrial verified safety indicator label badge */
+.verified-tag {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #1b5e20; /* Compliance green text */
+  background: #e8f5e9; /* Soft pale green backing tint fill */
+  padding: 5px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.review-display-card h3 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 14px 0;
+  color: var(--dark-charcoal, #121212);
+  letter-spacing: -0.3px;
+}
+
+.review-paragraph {
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: #555555;
+  font-style: italic;
+  margin: 0 0 30px 0;
+}
+
+/* Author block data alignment trays */
+.review-author {
+  margin-top: auto; /* Forces author data directly onto card baseline levels uniformly */
+  padding-top: 18px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.author-name {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--dark-charcoal, #121212);
+}
+
+.author-meta {
+  display: block;
+  font-size: 0.85rem;
+  color: #757575;
+  margin-top: 3px;
+}
+
+/* ==========================================================================
+   3. Subtle Motion Elevation Profiles on Mouse Focus Hover
+   ========================================================================== */
+.review-display-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  border-bottom-color: var(--primary-gold, #FFD700); /* Activates gold base underline glow */
+}
+
+/* ==========================================================================
+   4. Mobile Display Layout Breakpoint Overrides
+   ========================================================================== */
+@media (max-width: 768px) {
+  .reviews-workspace {
+    padding: 50px 5%;
+  }
+  
+  .reviews-grid {
+    grid-template-columns: 1fr; /* Force single column format layout row on compact viewports */
+    gap: 25px;
+  }
+  
+  .review-display-card {
+    padding: 25px;
+  }
+  
+  .review-display-card h3 {
+    font-size: 1.25rem;
+  }
+  
+  .page-banner h1 {
+    font-size: 2rem;
+  }
+}
